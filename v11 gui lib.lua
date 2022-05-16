@@ -321,7 +321,7 @@ function DiscordLib:Window(text)
     u.InputEnded:Connect(function(i, g)
         if g then return end
         
-        if i.UserInputType == Enum.UserInputType.Keyboard and i.KeyCode == Enum.KeyCode.BackSlash then
+        if i.UserInputType == Enum.UserInputType.Keyboard and i.KeyCode == Enum.KeyCode.RightAlt then
 			if minimized == false then
 				MainFrame:TweenSize(
 					UDim2.new(0, 0, 0, 0),
