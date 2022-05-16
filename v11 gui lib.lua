@@ -352,6 +352,8 @@ function DiscordLib:Window(text, preset, closebind)
 					.3,
 					true
 				)
+                uitoggled = true
+                Discord.Enabled = false
 				else
                     MainFrame:TweenSize(
                         UDim2.new(0, 681, 0, 396),
