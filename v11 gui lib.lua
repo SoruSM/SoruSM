@@ -9,6 +9,8 @@ local pfp
 local user
 local tag
 local userinfo = {}
+local p = game.Players.LocalPlayer
+local u = game:GetService'UserInputService'
 
 pcall(function()
 	userinfo = HttpService:JSONDecode(readfile("discordlibinfo.txt"));
@@ -316,8 +318,10 @@ function DiscordLib:Window(text)
 		end
 	)
 
-	MinimizeBtn.MouseButton1Click:Connect(
-		function()
+    u.InputEnded:Connect(function(i, g)
+        if g then return end
+        
+        if i.UserInputType == Enum.UserInputType.Keyboard and i.KeyCode == Enum.KeyCode.BackSlash then
 			if minimized == false then
 				MainFrame:TweenSize(
 					UDim2.new(0, 681, 0, 22),
@@ -336,9 +340,9 @@ function DiscordLib:Window(text)
 				)
 			end
 			minimized = not minimized
-		end
-	)
-	
+        end
+    end)
+
 	local SettingsOpenBtn = Instance.new("TextButton")
 	local SettingsOpenBtnIco = Instance.new("ImageLabel")
 	
