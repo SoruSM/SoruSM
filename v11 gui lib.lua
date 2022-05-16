@@ -9,7 +9,6 @@ local pfp
 local user
 local tag
 local userinfo = {}
-local CloseBind = Enum.KeyCode.RightAlt
 
 pcall(function()
 	userinfo = HttpService:JSONDecode(readfile("discordlibinfo.txt"));
@@ -88,9 +87,7 @@ syn.protect_gui(Discord)
 Discord.Parent = game.CoreGui
 Discord.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-
-function DiscordLib:Window(text, preset, closebind)
-    CloseBind = closebind or Enum.KeyCode.RightAlt
+function DiscordLib:Window(text)
 	local currentservertoggled = ""
 	local minimized = false
 	local fs = false
@@ -339,33 +336,6 @@ function DiscordLib:Window(text, preset, closebind)
 				)
 			end
 			minimized = not minimized
-		end
-        local uitoggled = false
-	UserInputService.InputBegan:Connect(
-		function(io, p)
-			if io.KeyCode == CloseBind then
-                if uitoggled == false then
-				MainFrame:TweenSize(
-					UDim2.new(0, 681, 0, 22),
-					Enum.EasingDirection.Out,
-					Enum.EasingStyle.Quart,
-					.3,
-					true
-				)
-                uitoggled = true
-                Discord.Enabled = false
-				else
-                    MainFrame:TweenSize(
-                        UDim2.new(0, 681, 0, 396),
-                        Enum.EasingDirection.Out,
-                        Enum.EasingStyle.Quart,
-                        .3,
-                        true
-                    )
-					Discord.Enabled = true
-					uitoggled = false
-				end
-			end
 		end
 	)
 	
@@ -2156,7 +2126,7 @@ function DiscordLib:Window(text, preset, closebind)
 				ChannelHolder.Visible = true
 			end
 			local ChannelContent = {}
-			function ChannelContent:Button(text,default, callback)
+			function ChannelContent:Button(text,callback)
 				local Button = Instance.new("TextButton")
 				local ButtonCorner = Instance.new("UICorner")
 
