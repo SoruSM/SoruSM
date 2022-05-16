@@ -344,19 +344,22 @@ function DiscordLib:Window(text, preset, closebind)
 	UserInputService.InputBegan:Connect(
 		function(io, p)
 			if io.KeyCode == CloseBind then
-				if uitoggled == false then
-					MainFrame:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
-					uitoggled = true
-					wait(.5)
-					Discord.Enabled = false
+                if uitoggled == false then
+				MainFrame:TweenSize(
+					UDim2.new(0, 681, 0, 22),
+					Enum.EasingDirection.Out,
+					Enum.EasingStyle.Quart,
+					.3,
+					true
+				)
 				else
-					MainFrame:TweenSize(
-						UDim2.new(0, 560, 0, 319),
-						Enum.EasingDirection.Out,
-						Enum.EasingStyle.Quart,
-						.6,
-						true
-					)
+                    MainFrame:TweenSize(
+                        UDim2.new(0, 681, 0, 396),
+                        Enum.EasingDirection.Out,
+                        Enum.EasingStyle.Quart,
+                        .3,
+                        true
+                    )
 					Discord.Enabled = true
 					uitoggled = false
 				end
