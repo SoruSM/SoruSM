@@ -2130,7 +2130,7 @@ function DiscordLib:Window(text)
 				ChannelHolder.Visible = true
 			end
 			local ChannelContent = {}
-			function ChannelContent:Button(text,callback)
+			function ChannelContent:Button(text,default, callback)
 				local Button = Instance.new("TextButton")
 				local ButtonCorner = Instance.new("UICorner")
 
