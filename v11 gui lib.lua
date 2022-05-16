@@ -9,6 +9,7 @@ local pfp
 local user
 local tag
 local userinfo = {}
+local CloseBind = Enum.KeyCode.RightAlt
 
 pcall(function()
 	userinfo = HttpService:JSONDecode(readfile("discordlibinfo.txt"));
@@ -86,9 +87,9 @@ Discord.Name = "Discord"
 syn.protect_gui(Discord)
 Discord.Parent = game.CoreGui
 Discord.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-local CloseBind = Enum.KeyCode.RightAlt
 
-function DiscordLib:Window(text, closebind)
+
+function DiscordLib:Window(text, preset, closebind)
     CloseBind = closebind or Enum.KeyCode.RightAlt
 	local currentservertoggled = ""
 	local minimized = false
