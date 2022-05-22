@@ -322,7 +322,24 @@ function DiscordLib:Window(text)
         if g then return end
         
         if i.UserInputType == Enum.UserInputType.Keyboard and i.KeyCode == Enum.KeyCode.RightAlt then
-			Discord.visible = false
+			if minimized == false then
+				MainFrame:TweenSize(
+					UDim2.new(0, 0, 0, 0),
+					Enum.EasingDirection.Out,
+					Enum.EasingStyle.Quart,
+					.3,
+					true
+				)
+			else
+				MainFrame:TweenSize(
+					UDim2.new(0, 681, 0, 396),
+					Enum.EasingDirection.Out,
+					Enum.EasingStyle.Quart,
+					.3,
+					true
+				)
+			end
+			minimized = not minimized
         end
     end)
 
