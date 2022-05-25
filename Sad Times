@@ -74,18 +74,11 @@ cw = hookfunc(coroutine.wrap,newcclosure(function(f,...)
 end))
 end)
 
-local Player = game.Players.LocalPlayer
 
-Player.CharacterAdded:Connect(function(Character)
-    Character.DescendantAdded:Connect(function(Inst)
-        if Inst:IsA("RemoteEvent") or Inst:IsA("RemoteFunction") then
-            local RemoteName = Inst.Name
-                coroutine.wrap(function()
-                        repeat task.wait() until Inst.Name ~= RemoteName
-                        Inst.Name = RemoteName
-                end)()
-        end
-    end)
+
+
+local s, cfg = pcall(function()
+	return game:GetService("HttpService"):JSONDecode(readfile("sadtimesgui.json"))
 end)
 
 --- misc
@@ -117,9 +110,6 @@ ModeratorJoinedMP4.Looped = false
 ModeratorJoinedMP4.archivable = false
 ModeratorJoinedMP4.Parent = game.Workspace
 
-local s, cfg = pcall(function()
-	return game:GetService("HttpService"):JSONDecode(readfile("sadtimesgui.json"))
-end)
 
 
 if not s then
