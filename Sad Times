@@ -216,7 +216,7 @@ combat:Toggle("Knocked Ownership", cfg.knockedownership, function()
 	end
 end)
 
-Testings:Toggle("Anti FIre", cfg.nofire, function()
+combat:Toggle("Anti FIre", cfg.nofire, function()
 	cfg.nofire = not cfg.nofire
 	if cfg.nofire then
 		local Player = game.Players.LocalPlayer
