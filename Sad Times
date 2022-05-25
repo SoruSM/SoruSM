@@ -1,0 +1,1232 @@
+-- autoexec stuff
+repeat wait() until game:GetService("Players").LocalPlayer ~= nil
+if game.GameId ~= 1087859240 then return end
+do
+	local o
+	o = hookmetamethod(game, "__index", function(t, k)
+		if t == game and k == "GameId" and tostring(getcallingscript()) == "UIManager" then
+			return 420
+		end
+		return o(t, k)
+	end)
+end
+do
+	local o
+	o = hookmetamethod(game, "__newindex", function(t, k, v)
+		if t:IsA("RemoteEvent") or t:IsA("RemoteFunction") then
+			if t.Parent and t.Parent.Name == "DefaultChatSystemChatEvents" then
+				return
+			end
+			if k == "Name" and typeof(v) == "string" and v:lower():find("archmage") then
+				return
+			end
+		end
+		return o(t, k, v)
+	end)
+end
+
+do
+    local o
+    o = hookmetamethod(game, "__index", function(k, v)
+        if not checkcaller() and tostring(k) == "Humanoid" and v == "StateEnableChanged" then 
+            return Instance.new("Folder").ChildAdded
+        end
+        return o(k, v)
+    end)
+end
+
+spawn(function()
+local cw
+local lockThreads = {}
+cw = hookfunc(coroutine.wrap,newcclosure(function(f,...)
+    if typeof(f) == "function" and islclosure(f) then
+        local consts,upvals = getconstants(f),getupvalues(f)
+        local g3 = getfenv(3)
+        
+        -- Anim Detection
+        if typeof(upvals[2]) == "Instance" and upvals[2]:IsA("AnimationTrack") and upvals[1] == upvals[2].Play then
+            warn("DETECTION__1")
+            lockThreads[g3] = true
+        end
+        
+        -- Script Delete Detection        
+        if consts[1] == "scr" and consts[2] == "Parent" then
+            warn("DETECTION__2")
+            lockThreads[g3] = true
+        end
+        
+        -- Crasher Detection
+        if consts[1] == "coroutine" and consts[2] == "create" and table.find(consts,"dead") then
+            warn("DETECTION__3")
+            lockThreads[g3] = true
+        end
+
+        if g3 and lockThreads[g3] then
+            while true do
+                game:GetService("Players").LocalPlayer:Kick("Detected Ban Attempt!")                
+                wait()
+            end    
+        end        
+                
+        
+    end
+    return cw(f,...)
+end))
+end)
+
+local Player = game.Players.LocalPlayer
+
+Player.CharacterAdded:Connect(function(Character)
+    Character.DescendantAdded:Connect(function(Inst)
+        if Inst:IsA("RemoteEvent") or Inst:IsA("RemoteFunction") then
+            local RemoteName = Inst.Name
+                coroutine.wrap(function()
+                        repeat task.wait() until Inst.Name ~= RemoteName
+                        Inst.Name = RemoteName
+                end)()
+        end
+    end)
+end)
+
+--- misc
+local request = request or syn and syn.request
+
+
+local game = game
+local workspace = workspace
+
+local setmetatable = setmetatable
+local select = select 
+local pcall = pcall
+local task_wait = task.wait
+local math_random = math.random
+--- sounds
+local IlluMP4 = Instance.new("Sound")
+IlluMP4.Name = "Sound"
+IlluMP4.SoundId = "http://www.roblox.com/asset/?id=138222365"
+IlluMP4.Volume = 2
+IlluMP4.Looped = false
+IlluMP4.archivable = false
+IlluMP4.Parent = game.Workspace
+
+local ModeratorJoinedMP4 = Instance.new("Sound")
+ModeratorJoinedMP4.Name = "Sound"
+ModeratorJoinedMP4.SoundId = "http://www.roblox.com/asset/?id=138081500"
+ModeratorJoinedMP4.Volume = 2
+ModeratorJoinedMP4.Looped = false
+ModeratorJoinedMP4.archivable = false
+ModeratorJoinedMP4.Parent = game.Workspace
+
+local s, cfg = pcall(function()
+	return game:GetService("HttpService"):JSONDecode(readfile("sadtimesgui.json"))
+end)
+
+
+if not s then
+	cfg = {
+		noStun = false,
+		activeCast = false,
+		spellCharges = false,
+		playerESP = false,
+		trinketESP = false,
+		flyBind = "BackSlash",
+		flyspeedBind = "LeftAlt",
+		noFall = false,
+		logBind = "LeftBracket",
+		autoBard = false,
+		musicianBuff = false,
+		canSee = false,
+		aimbot = false,
+		noFrostbite = false,
+		noBurnmarks = false,
+		acrobat = false,
+		antiBackcast = false,
+		infClimb = false,
+		noInsane = false,
+		crtimer = false,
+		unnamed = false,
+		nobardgui = false,
+		antidsage = false,
+		vulnereaim = false,
+		inferiaim = false,
+		chatlogs = false,
+		nokillbrick = false,
+		reset = false,
+		fullbright = false,
+		infdoublejump = false,
+		serverhop = false,
+		healeredict = false,
+		noshriekereat = false,
+		infjesterdodge = false,
+		nospellcd = false,
+		leaderboardobserve = false,
+		infmeter = false,
+		aabypass = false,
+		autosell = false,
+		knockself = false,
+		knockedownership = false,
+		wipe = false,
+		hyperbodyinff = false,
+		ServerLagSwitch = false,
+		anticon = false,
+        autopickup = false,
+		nofog = false,
+		celeaim = false,
+		nofire = false,
+	}
+end
+
+spawn(function()
+	while wait(30) do
+		pcall(function()
+			writefile("sadtimesgui.json", game:GetService("HttpService"):JSONEncode(cfg))
+		end)
+	end
+end)
+
+--- remotes
+
+
+
+
+
+
+
+
+--- Libary stuff
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/SoruSM/SoruSM/main/v11%20gui%20lib.lua")()
+
+local win = DiscordLib:Window("sad gui")
+
+local serv = win:Server("new gui ig?", "poop")
+
+
+
+
+local combat = serv:Channel("Combat")
+local esp = serv:Channel("ESP")
+local localplayer = serv:Channel("LocalPlayer")
+local misc = serv:Channel("Misc")
+local penta = serv:Channel("Penta ")
+local musthave = serv:Channel("Cool stuff")
+local Troll = serv:Channel("Troll Scripts")
+local Testings = serv:Channel("Beta - Testing stuff -")
+local stepped = game:GetService("RunService").RenderStepped
+local Workspace = game:GetService("Workspace");
+
+
+combat:Button("Fly = BackSlash ", function()
+end)
+
+combat:Toggle("Knocked Ownership", cfg.knockedownership, function()
+	cfg.knockedownership = not cfg.knockedownership
+	if cfg.knockedownership then
+		local bone = game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild("Bone")
+		bone:Destroy()
+	end
+end)
+
+Testings:Toggle("Anti FIre", cfg.nofire, function()
+	cfg.nofire = not cfg.nofire
+	if cfg.nofire then
+		local Player = game.Players.LocalPlayer
+		local character = Player.Character
+		character.ChildAdded:Connect(function(child)
+			if child.name == "Burning" and cfg.nofire then
+				task.wait()
+				character.CharacterHandler.Remotes.Dodges:FireServer({4, math.random()})
+			end
+		end)
+	end
+end)
+
+misc:Toggle("Auto Pickup", cfg.autopickup, function()
+	cfg.autopickup = not cfg.autopickup
+    if cfg.autopickup then
+		for i,v in pairs(workspace.Thrown:GetDescendants()) do
+			if v.Name == 'ToolBag' and (game.Players.LocalPlayer.Character.Head.Position - v.Position).Magnitude <= 30 then
+			repeat game:GetService('RunService').Heartbeat:Wait()
+				v.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+			until (v == nil) 
+		end
+	end
+end
+end)
+
+
+combat:Button("Wipe", cfg.wipe, function()
+	cfg.wipe = not cfg.wipe
+	if cfg.wipe then
+		local Player = game.Players.LocalPlayer
+		local Character = Player.Character
+		Character.CharacterHandler.Remotes.ApplyFallDamage:FireServer({math_random(), 2.69}, {})
+	end
+end)
+
+
+
+
+penta:Toggle("AA Bypass (Green wid no light) ", cfg.aabypass, function()
+	cfg.aabypass = not cfg.aabypass
+	if cfg.aabypass then
+		local Player = game.Players.LocalPlayer
+	local Character = Player.Character
+
+	Character["Jack o' Lantern Chair Green"].Script:Destroy()
+		task.wait(1.0)
+	Character.Chair:Destroy()
+	end
+	DiscordLib:Notification("Notification", "AA Bypass on", ":p")
+end)
+
+
+
+musthave:Toggle("Leaderboard Spectate", cfg.leaderboardobserve, function()
+	cfg.leaderboardobserve = not cfg.leaderboardobserve
+	if cfg.leaderboardobserve then
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/SoruSM/SoruSM/main/Leaderboard%20observe'))()
+	end
+end)
+
+musthave:Toggle("Inf bard meter", cfg.infmeter, function()
+	cfg.infmeter = not cfg.infmeter
+	if cfg.infmeter then
+		while task.wait(4.5) do
+			game:GetService("ReplicatedStorage").Requests.BardStreak:FireServer(30)
+		end
+	else
+		return
+	end
+end)
+
+misc:Toggle("No Shrieker Eat", cfg.noshriekereat, function()
+	cfg.noshriekereat = not cfg.noshriekereat
+end)
+
+misc:Toggle("Inf Hyper Body", cfg.hyperbodyinff, function()
+	cfg.hyperbodyinff = not cfg.hyperbodyinff
+end)
+
+misc:Toggle("Celeritas Aimbot", cfg.celeaim, function()
+	cfg.celeaim = not cfg.celeaim
+	if cfg.celeaim then
+		local play = game.Players.LocalPlayer;
+local ffc = game.FindFirstChild;
+local mouse = play:GetMouse()
+local getChildren = game.GetChildren;
+local Live = workspace.Live;
+local function GetClosest()
+    local Closest = 250;
+    local plrClose;
+    for i,v in next, getChildren(Live) do
+        if play.Character and v ~= play.Character and ffc(v,"HumanoidRootPart") and (v.HumanoidRootPart.Position-mouse.Hit.p).magnitude < Closest then
+            Closest = (v.HumanoidRootPart.Position-mouse.Hit.p).magnitude;
+            plrClose = v;
+        end
+    end
+    if plrClose then
+        return plrClose.HumanoidRootPart;
+    end
+    return nil;
+end
+
+local getmouse = game.ReplicatedStorage.Requests.GetMouse;
+getmouse.OnClientInvoke = function()
+    local Closest = GetClosest();
+    if play.Character and ffc(play.Character,"Celeritas") and Closest then
+        local tab = {}
+        tab.Hit = Closest.CFrame
+        tab.Target = Closest
+        tab.UnitRay = Ray.new(play.Character.HumanoidRootPart.CFrame.p,((Closest.CFrame.p-play.Character.HumanoidRootPart.CFrame.p).Unit))
+        tab.X = mouse.X
+        tab.Y = mouse.Y
+        return tab
+    end
+    local tab = {}
+    tab.Hit = mouse.Hit
+    tab.Target = mouse.Target
+    tab.UnitRay = mouse.UnitRay
+    tab.X = mouse.X
+    tab.Y = mouse.Y
+    return tab
+end
+end
+end)
+
+
+
+misc:Button("Knock Self", cfg.knockself, function()
+	cfg.knockself = not cfg.knockself
+	if cfg.knockself then
+		local Player = game.Players.LocalPlayer
+		local Character = Player.Character
+		Character.CharacterHandler.Remotes.ApplyFallDamage:FireServer({math_random(), 1}, {})
+	end
+end)
+
+misc:Button("No Fog", cfg.nofog, function()
+	cfg.nofog = not cfg.nofog
+	if cfg.nofog then
+		local Lighting = game:GetService'Lighting';
+		local CS = game:GetService'CollectionService';
+
+		if shared.LFS then shared.LFS:disconnect(); end
+		if shared.LFE then shared.LFE:disconnect(); end
+
+		shared.LFS = Lighting:GetPropertyChangedSignal'FogStart':Connect(function()
+   Lighting.FogStart = 0;
+end)
+shared.LFE = Lighting:GetPropertyChangedSignal'FogEnd':Connect(function()
+   Lighting.FogEnd = math.random(3000, 5000);
+   for i, v in pairs(CS:GetTagged'WeatherCover') do
+       if v:IsA'BasePart' and v:IsDescendantOf(workspace) then
+           v.Parent = game.Selection;
+       end
+   end
+end)
+
+Lighting.FogEnd = math.random(1e6,9e6);
+end
+end)
+
+
+
+misc:Toggle("Auto Sell", cfg.autosell, function()
+	cfg.autosell = not cfg.autosell
+	if cfg.autosell then
+		local Player = game.Players.LocalPlayer
+	local Character = Player.Character
+	local Backpack = Player.Backpack
+	local PostDialogue = game.ReplicatedStorage.Requests.PostDialogue
+	local PlaceTool = game.ReplicatedStorage.Requests.PlaceTool
+	local dialogue;
+	local shittygems = {
+    ['Opal'] = true,
+    ['Ruby'] = true,
+    ['Sapphire'] = true,
+    ['Emerald'] = true,
+    ['Diamond'] = true,
+}
+	local scrolls = {
+    ['Scroll of Ignis'] = true,
+    ['Scroll of Tenebris'] = true,
+    ['Scroll of Contrarium'] = true,
+    ['Scroll of Hystericus'] = true,
+    ['Scroll of Armis'] = true,
+    ['Scroll of Velo'] = true,
+    ['Scroll of Telorum'] = true,
+    ['Scroll of Celeritas'] = true,
+    ['Scroll of Sagitta Sol'] = true,
+    ['Scroll of Viribus'] = true,
+    ['Scroll of Scrupus'] = true,
+}
+
+
+
+
+
+
+	for i,v in pairs(Player.Backpack:GetChildren()) do 
+    if scrolls[v.Name] or shittygems[v.Name] then
+        game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+        wait();
+        for i,v in pairs(game.workspace.NPCs:GetChildren()) do 
+            if v.Name == 'Merchant' and (Player.Character.Head.Position - v.Head.Position).Magnitude <= 15 then
+                repeat wait() 
+                    fireclickdetector(v.ClickDetector)
+                until (Player.PlayerGui.DialogueGui.DialogueFrame.Visible)
+            end;
+        end;
+        PostDialogue:FireServer({choice = "Could you appraise this for me?"})
+        task.wait(0.5)
+        PostDialogue:FireServer({choice = "It's a deal."})
+        task.wait(0.5)
+        PostDialogue:FireServer({exit = true})
+    end;
+	end;
+end
+end)
+
+
+penta:Toggle("Inf Jester Dodge", cfg.infjesterdodge, function()
+	cfg.infjesterdodge = not cfg.infjesterdodge
+	if cfg.infjesterdodge then
+		game.Players.LocalPlayer.Character.HumanoidRootPart.Dodgerr:Destroy()
+	end
+	DiscordLib:Notification("Notification", "Infinite Dodges on", ":p")
+end)
+
+penta:Toggle("No Spell CD (Reset to Fix )", cfg.nospellcd, function()
+	cfg.nospellcd = not cfg.nospellcd
+	if cfg.nospellcd then
+		local Players = game:GetService("Players")
+		local UserInputService = game:GetService'UserInputService'
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
+
+local CanSnap = false
+
+UserInputService.InputBegan:Connect(function(inputObject, gp)
+    if gp then return end
+    
+    if inputObject.KeyCode == Enum.KeyCode.H then
+        CanSnap = true
+        task.wait()
+        CanSnap = false
+    end
+end)
+
+local GetMouse = game.ReplicatedStorage.Requests.GetMouse
+
+local function returnMouseTable()
+    return {
+        Hit = Mouse.Hit;
+        Target = Mouse.Target;
+        UnitRay = Mouse.UnitRay;
+        X = Mouse.X;
+        Y = Mouse.Y;
+    }
+end
+
+GetMouse.OnClientInvoke = function()
+    repeat task.wait() until CanSnap
+    return returnMouseTable()
+end
+end
+DiscordLib:Notification("Notification", "Infinite Snap on", ":p")
+end)
+
+localplayer:Toggle("Healer Health ESP", cfg.healeredict, function()
+	cfg.healeredict = not cfg.healeredict
+	if cfg.healeredict then
+		local plrs = game:service'Players';
+
+		local function HEALEREDICT(model)
+		local human = model:WaitForChild('Humanoid',5);
+		if human then
+		human.HealthDisplayDistance = 100;
+		human.HealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOn;
+		end;
+		end;
+		
+		for _,p in next,plrs:GetPlayers() do
+		if p.Character~=nil then HEALEREDICT(p.Character) end;
+		p.CharacterAdded:Connect(function(c) HEALEREDICT(c) end);
+		end;
+		
+		plrs.PlayerAdded:Connect(function(p)
+		p.CharacterAdded:Connect(function(c) HEALEREDICT(c) end);
+		end);
+	else
+		local plrs = game:service'Players';
+
+local function HEALEREDICT(model)
+local human = model:WaitForChild('Humanoid',5);
+if human then
+human.HealthDisplayDistance = 100;
+human.HealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOff;
+end;
+end;
+
+for _,p in next,plrs:GetPlayers() do
+if p.Character~=nil then HEALEREDICT(p.Character) end;
+p.CharacterAdded:Connect(function(c) HEALEREDICT(c) end);
+end;
+
+plrs.PlayerAdded:Connect(function(p)
+p.CharacterAdded:Connect(function(c) HEALEREDICT(c) end);
+end);
+	end
+end)
+
+misc:Toggle("Server Hop ", cfg.serverhop, function()
+	cfg.serverhop = not cfg.serverhop
+	if cfg.serverhop then
+		game:GetService("Players").LocalPlayer:Kick("Server Hopping. Auto blocks now")
+		task.wait(0.1)
+		game:GetService("GuiService"):ClearError()
+		global_functions.block_random_player()
+		task.wait(3)
+		game:GetService("TeleportService"):Teleport(3016661674)
+	end
+end)
+
+
+
+misc:Toggle("Full Bright (Turn on and off again to turn off)", cfg.fullbright, function()
+	cfg.fullbright = not cfg.fullbright
+	if cfg.fullbright then
+		loadstring(game:HttpGet("https://pastebin.com/raw/YqTHMujy"))()
+	end
+end)
+
+misc:Toggle("crtimer", cfg.crtimer, function()
+	cfg.crtimer =  not cfg.crtimer
+	if cfg.crtimer then
+		loadstring(game:HttpGet("https://pastebin.com/raw/ShYGDitg"))()
+	end
+end)
+
+esp:Button("Unnamed ESP", cfg.unnamed, function()
+	cfg.unnamed = not cfg.unnamed
+	if cfg.unnamed then
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
+	end
+end)
+misc:Toggle("Infinite Double Jump", cfg.infdoublejump, function()
+	cfg.infdoublejump = not cfg.infdoublejump
+end)
+
+combat:Toggle("No Stun", cfg.noStun, function()
+	cfg.noStun = not cfg.noStun
+end)
+combat:Toggle("Anti Con", cfg.anticon, function()
+	cfg.anticon = not cfg.anticon
+end)
+misc:Toggle("Vulnere Aimbot", cfg.vulnereaim, function()
+	cfg.vulnereaim = not cfg.vulnereaim
+	if cfg.vulnereaim then
+		loadstring(game:HttpGet('https://pastebin.com/raw/3j5efHYw'))()
+	end
+end)
+misc:Toggle("No Kill Bricks", cfg.nokillbrick, function()
+	cfg.nokillbrick = not cfg.nokillbrick
+	if cfg.nokillbrick then
+		loadstring(game:HttpGet('https://pastebin.com/raw/59sa0AfD'))()
+	else
+		loadstring(game:HttpGet('https://pastebin.com/raw/i0DqQmX7'))()
+	end
+end)
+misc:Toggle("Chat Logs", cfg.chatlogs, function()
+	cfg.chatlogs = not cfg.chatlogs
+	if cfg.chatlogs then
+		loadstring(game:HttpGet('https://pastebin.com/raw/hY58AC9C'))()
+	else
+		loadstring(game:HttpGet('https://pastebin.com/raw/i0DqQmX7'))()
+	end
+end)
+misc:Button("Reset", cfg.reset, function()
+	cfg.reset = not cfg.reset
+	if cfg.reset then
+		game.Players.LocalPlayer.Character:BreakJoints()
+	end
+end)
+
+misc:Toggle("Inferi Aimbot", cfg.inferiaim, function()
+	cfg.inferiaim = not cfg.inferiaim
+	if cfg.inferiaim then
+		loadstring(game:HttpGet('https://pastebin.com/raw/MtBTQYNH'))()
+	end
+end)
+combat:Toggle("Anti Dsage", cfg.antidsage, function()
+	cfg.antidsage = not cfg.antidsage
+end)
+combat:Toggle("Anti Backcast", cfg.antiBackcast, function()
+	cfg.antiBackcast = not cfg.antiBackcast
+end)
+
+combat:Toggle("Spell Stacking", cfg.activeCast, function()
+	cfg.activeCast = not cfg.activeCast
+end)
+combat:Toggle("No Spell Cooldown", cfg.spellCharges, function() -- probably getting patched for jester prog
+	cfg.spellCharges = not cfg.spellCharges
+end)
+
+
+localplayer:Toggle("No Fall Damage", cfg.noFall, function()
+	cfg.noFall = not cfg.noFall
+end)
+
+localplayer:Toggle("Auto Bard", cfg.autoBard, function()
+	cfg.autoBard = not cfg.autoBard
+end)
+localplayer:Toggle("Bard Buff Multiplier", cfg.musicianBuff, function()
+	cfg.musicianBuff = not cfg.musicianBuff
+end)
+localplayer:Toggle("CanSee", cfg.canSee, function()
+	cfg.canSee = not cfg.canSee
+end)
+localplayer:Toggle("No Insanity", cfg.noInsane, function()
+	cfg.noInsane = not cfg.noInsane
+	if cfg.noInsane then
+		local charp = game:GetService("Players").LocalPlayer.Character or game:GetService("Players").LocalPlayer.CharacterAdded:Wait()
+		if charp:FindFirstChild("Careless") then
+			wait()
+			charp:FindFirstChild("Careless"):Destroy()
+		end
+		if charp:FindFirstChild("PsychoInjury") then
+			wait()
+			charp:FindFirstChild("PsychoInjury"):Destroy()
+		end
+	end
+end)
+localplayer:Toggle("No Frostbite", cfg.noFrostbite, function()
+	cfg.noFrostbite = not cfg.noFrostbite
+	if cfg.noFrostbite then
+		local charp = game:GetService("Players").LocalPlayer.Character or game:GetService("Players").LocalPlayer.CharacterAdded:Wait()
+		if charp:FindFirstChild("Frostbitten") then
+			wait()
+			charp:FindFirstChild("Frostbitten"):Destroy()
+		end
+	end
+end)
+localplayer:Toggle("No Burnmarks", cfg.noBurnmarks, function()
+	cfg.noBurnmarks = not cfg.noBurnmarks
+end)
+localplayer:Toggle("Spy Jump", cfg.acrobat, function()
+	cfg.acrobat = not cfg.acrobat
+end)
+localplayer:Toggle("Infinite climb", cfg.infClimb, function()
+	cfg.infClimb = not cfg.infClimb
+end)
+
+
+--- fly????? / insta log
+
+-- scripts
+
+local fallRemote
+
+local stuns = {	
+"Sprinting",
+"Action",
+"NoJump",
+"HeavyAttack",
+"LightAttack",
+"NoJump",
+"ForwardDash",
+"RecentDash",
+"ClimbCoolDown",
+"BrokenLeg",
+"Knocked",
+"Unconscious",
+"BrokenLeg",
+"BrokenRib",
+"BrokenArm",
+"NoDam",
+"NoDash",
+"Casting",
+"BeingExecuted",
+"IsClimbing",
+"Blocking",
+"NoControl",
+"MustSprint",
+"AttackExcept",
+"Poisoned",
+"BarrierCD",
+"TimeStop",
+"TimeStopped",
+"BeingEaten",
+"CamFlip",
+"Confused",
+"ArguereSingleCD",
+"GladiusSelfCD",
+
+}
+
+local hyperbodyinf = {
+	"HasSigilBuff"
+}
+
+
+local infdoublejump = {	
+	"JumpCool"
+}
+
+local stunsv2 = {
+	"ManaStop",
+}
+local shriekernomunch = {
+	"BeingEaten",
+}
+
+local anticon = {
+	"ContrariumTag",
+}
+
+local spells = {
+	Ignis = {
+		normal = {
+			90, 100
+		},
+		snap = {
+			50, 60
+		}
+	},
+	Percutiens = {
+		normal = {
+			60, 70
+		},
+		snap = {
+			70, 80
+		}
+	},
+	Gelidus = {
+		normal = {
+			80, 100
+		},
+		snap = {
+			80, 100
+		}
+	},
+	Snarvindur = {
+		normal = {
+			60,75
+		},
+		snap = {
+			15, 30
+		}
+	},
+	Pondus = {
+		normal = {
+			65, 85
+		},
+		snap = {
+			10, 30
+		}
+	},
+	Viribus = {
+		normal = {
+			20, 35
+		},
+		snap = {
+			60, 75
+		}
+	},
+	Celeritas = {
+		normal = {
+			70, 90
+		},
+		snap = {
+			75, 95
+		}
+	},
+	Nocere = {
+		normal = {
+			70, 80
+		},
+		snap = {
+			65, 85
+		}
+	},
+	Hoppa = {
+		normal = {
+			40, 60
+		},
+		snap = {
+			50, 60
+		}
+	},
+	Mori = {
+		normal = {
+			30, 32
+		},
+		snap = {
+			26, 35
+		}
+	},
+	Fimbulvetr = {
+		normal = {
+			84, 92
+		},
+		snap = {
+			70, 80
+		}
+	},
+	Gate = {
+		normal = {
+			75, 83
+		},
+		snap = {
+			75, 83
+		}
+	},
+	Telorum = {
+		normal = {
+			80, 90
+		},
+		snap = {
+			70, 80
+		}
+	}
+}
+
+local lremotes = {}
+local rremotes = {}
+local mana
+
+local function canSeeFunc(obj)
+	if cfg.canSee then return false end
+
+	local vector, inViewport = workspace.CurrentCamera:WorldToViewportPoint(obj.Position)
+	if not inViewport then
+		return false
+	end
+	local hit = workspace:FindPartOnRayWithIgnoreList(Ray.new(workspace.CurrentCamera.CFrame.Position, obj.Position - workspace.CurrentCamera.CFrame.Position), {game:GetService("Players").LocalPlayer.Character, workspace.Thrown, workspace.MonsterSpawns})
+	if not hit then
+		return true
+	end
+	if hit ~= obj and (not obj.Parent:FindFirstChild("Humanoid") or hit.Parent ~= obj.Parent) then
+		return false
+	end
+	return true
+end
+
+game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(char)
+	char.ChildAdded:Connect(function(obj)
+		if obj.Name == "ActiveCast" and cfg.activeCast then
+			game:GetService("RunService").Heartbeat:Wait()
+			obj:Destroy()
+		end
+		if table.find(stuns, obj.Name) and cfg.noStun then
+			game:GetService("RunService").Heartbeat:Wait()
+			obj:Destroy()
+		end
+		if table.find(hyperbodyinf, obj.Name) and cfg.hyperbodyinff then
+			game:GetService("RunService").Heartbeat:Wait()
+			obj:Destroy()
+		end
+		if table.find(shriekernomunch, obj.Name) and cfg.noshriekereat then
+			game:GetService("RunService").Heartbeat:Wait()
+			obj:Destroy()
+		end
+		if table.find(stunsv2, obj.Name) and cfg.antidsage then
+			game:GetService("RunService").Heartbeat:Wait()
+			obj:Destroy()
+		end
+		if table.find(infdoublejump, obj.Name) and cfg.infdoublejump then
+			game:GetService("RunService").Heartbeat:Wait()
+			obj:Destroy()
+		end
+		if table.find(anticon, obj.Name) and cfg.anticon then
+			game:GetService("RunService").Heartbeat:Wait()
+			obj:Destroy()
+		end
+		if obj.Name == "Frostbitten" and cfg.noFrostbite then
+			game:GetService("RunService").Heartbeat:Wait()
+			obj:Destroy()
+		end
+		if obj.Name == "Careless" and cfg.noInsane or obj.Name == "PsychoInjury" and cfg.noInsane then
+			game:GetService("RunService").Heartbeat:Wait()
+			obj:Destroy()
+		end
+	end)
+	local boosts = char:WaitForChild("Boosts")
+	boosts.ChildAdded:Connect(function(obj)
+		if obj.Name == "MusicianBuff" and cfg.musicianBuff then
+			game:GetService("RunService").Heartbeat:Wait()
+			obj:Destroy()
+		end
+	end)
+
+	local boosts = char:WaitForChild("Boosts")
+	boosts.ChildAdded:Connect(function(obj)
+		if obj.Name == "SpeedBoost" and cfg.noStun then
+			game:GetService("RunService").Heartbeat:Wait()
+			obj:Destroy()
+		end
+	end)
+	
+
+	fallRemote = char:WaitForChild("CharacterHandler"):WaitForChild("Remotes"):WaitForChild("ApplyFallDamage")
+	lremotes[1] = char.CharacterHandler.Remotes:WaitForChild("LeftClick")
+	lremotes[2] = char.CharacterHandler.Remotes:WaitForChild("LeftClickRelease")
+	rremotes[1] = char.CharacterHandler.Remotes:WaitForChild("RightClick")
+	rremotes[2] = char.CharacterHandler.Remotes:WaitForChild("RightClickRelease")
+	mana = char:WaitForChild("Mana")
+	game:GetService("ReplicatedStorage").Requests.CanSee.OnClientInvoke = canSeeFunc
+end)
+
+do
+	local o
+	o = hookfunction(Instance.new("RemoteEvent").FireServer, function(rem, ...)
+		if cfg.noFall and rem == fallRemote then
+			return
+		end
+		if cfg.antiBackcast then
+			if rem == lremotes[1] or rem == lremotes[2] then
+				local t = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool")
+				if t and spells[t.Name] then
+					if game:GetService("Players").LocalPlayer.Character:FindFirstChild("ActiveCast") then
+						return o(rem, ...)
+					end
+					if mana.Value > spells[t.Name].normal[1] and mana.Value < spells[t.Name].normal[2] then
+						return o(rem, ...)
+					else
+						return
+					end
+				else
+					return o(rem, ...)
+				end
+			elseif rem == rremotes[1] or rem == rremotes[2] then
+				local t = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool")
+				if t and spells[t.Name] then
+					if game:GetService("Players").LocalPlayer.Character:FindFirstChild("ActiveCast") then
+						return o(rem, ...)
+					end
+					if mana.Value > spells[t.Name].snap[1] and mana.Value < spells[t.Name].snap[2] or game:GetService("Players").LocalPlayer.Character:FindFirstChild("ActiveCast") then
+						return o(rem, ...)
+					else
+						return
+					end
+				else
+					return o(rem, ...)
+				end
+			end
+		end
+		return o(rem, ...)
+	end)
+end
+
+
+
+do
+	local lp = game:GetService("Players").LocalPlayer
+	local o
+	o = hookmetamethod(game, "__index", function(t, k)
+		if t == lp and k == "Name" and not checkcaller() and cfg.autoBard and getcallingscript().Parent and getcallingscript().Parent.Name == "BardGui" then
+			return "Melon_Sensei"
+		end
+		return o(t, k)
+	end)
+end
+
+local Mouse = game:GetService("Players").LocalPlayer:GetMouse()
+local Direction = Vector3.new()
+local InterpolatedDir = Direction
+local Tilt = 0
+local InterpolatedTilt = Tilt
+local RunService = game:GetService("RunService")
+local Toggled = false
+local Sprinting = false
+local CameraPos = workspace.CurrentCamera.CFrame.Position
+
+local function Lerp(a, b, t)
+	return a + (b - a) * t
+end
+
+local LastPos = nil
+
+
+
+game:GetService("UserInputService").InputBegan:Connect(function(input, processed)
+	if processed then return end
+	if input.KeyCode == nil then return end
+	local key = tostring(input.KeyCode):gsub("Enum.KeyCode.", "")
+	if key == cfg.logBind then
+		local char = game:GetService("Players").LocalPlayer.Character
+		if char == nil then
+			game:GetService("Players").LocalPlayer:Kick("Safely logged!")
+			wait(5)
+			game:GetService("GuiService"):ClearError()
+		else
+			if char:FindFirstChild("Danger") == nil then
+				game:GetService("Players").LocalPlayer:Kick("Safely logged!")
+				wait(5)
+				game:GetService("GuiService"):ClearError()
+			else
+				repeat
+					wait()
+				until char:FindFirstChild("Danger") == nil
+				wait()
+				game:GetService("Players").LocalPlayer:Kick("Safely logged!")
+				wait(5)
+				game:GetService("GuiService"):ClearError()
+			end
+		end
+	elseif key == cfg.flyBind then
+		if game:GetService("Players").LocalPlayer.Character then
+			Toggled = not Toggled
+			if Toggled then
+				LastPos = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position	
+				local huma = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+				huma:SetStateEnabled(5,false)
+			
+				huma:ChangeState(3)
+				game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true 
+				
+			else
+				local huma = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+				huma:SetStateEnabled(5,true)
+				
+				huma:ChangeState(5)
+				LastPos = nil
+				game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+				
+			end
+		end
+	elseif key == cfg.flyspeedBind then
+		Sprinting = true
+	elseif key == "W" then
+		Tilt = -20
+		Direction = Vector3.new(Direction.X, Direction.Y, -1)
+	elseif key == "A" then
+		Direction = Vector3.new(-1, Direction.Y, Direction.Z)
+	elseif key == "S" then
+		Tilt = 20
+		Direction = Vector3.new(Direction.X, Direction.Y, 1)
+	elseif key == "D" then
+		Direction = Vector3.new(1, Direction.Y, Direction.Z)
+	end
+end)
+
+game:GetService("UserInputService").InputEnded:Connect(function(input, processed)
+	if processed then return end
+	if input.KeyCode == nil then return end
+	local key = tostring(input.KeyCode):gsub("Enum.KeyCode.", "")
+	if key == cfg.flyspeedBind then
+		Sprinting = false
+	elseif key == "W" then
+		Tilt = 0
+		Direction = Vector3.new(Direction.X, Direction.Y, 0)
+	elseif key == "A" then
+		Direction = Vector3.new(0, Direction.Y, Direction.Z)
+	elseif key == "S" then
+		Tilt = 0
+		Direction = Vector3.new(Direction.X, Direction.Y, 0)
+	elseif key == "D" then
+		Direction = Vector3.new(0, Direction.Y, Direction.Z)
+	end
+end)
+
+game:GetService("RunService").Stepped:Connect(function()
+	if Toggled and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+		for i,v in next, game:GetService("Players").LocalPlayer.Character:GetDescendants() do
+			if v:IsA("BasePart") then
+				v.Velocity = Vector3.new()
+				v.CanCollide = false
+			end
+		end
+		local RootPart = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+		InterpolatedDir = InterpolatedDir:Lerp((Direction * (Sprinting and 19 or 5)), 0.2)
+		InterpolatedTilt = Lerp(InterpolatedTilt, Tilt * (Sprinting and 2 or 1), Tilt == 0 and 0.2 or 0.1)
+		RootPart.CFrame = RootPart.CFrame:Lerp(CFrame.new(RootPart.Position, RootPart.Position + Mouse.UnitRay.Direction) * CFrame.Angles(0, math.rad(00), 0) * CFrame.new(InterpolatedDir) * CFrame.Angles(math.rad(InterpolatedTilt), 0, 0), 0.2)
+	end
+	if game:GetService("Players").LocalPlayer.Character then
+		local char = game:GetService("Players").LocalPlayer.Character
+		if cfg.acrobat then
+			if not game:GetService("CollectionService"):HasTag(char, "Acrobat") then
+				game:GetService("CollectionService"):AddTag(char, "Acrobat")
+			end
+		else
+			if game:GetService("CollectionService"):HasTag(char, "Acrobat") then
+				game:GetService("CollectionService"):RemoveTag(char, "Acrobat")
+			end
+		end
+		if cfg.infClimb then
+			if not game:GetService("CollectionService"):HasTag(char, "The Soul") then
+				game:GetService("CollectionService"):AddTag(char, "The Soul")
+			end
+		else
+			if game:GetService("CollectionService"):HasTag(char, "The Soul") then
+				game:GetService("CollectionService"):RemoveTag(char, "The Soul")
+			end
+		end
+	end
+end)
+
+
+--[[
+KeyBinds = {
+    Turn on ESP = Y,
+    Turn off ESP = U 
+}
+]]--
+
+
+
+
+
+
+
+
+
+
+repeat task.wait(0.5) until game:IsLoaded() task.wait(0.25)
+
+local ModID = {117075515,147287757,2052324682,1220344444,364994040,96218539,434535742,19044993,1490237662,71662791,88193330,274304909,177436599,1586650903,1085890137,143241422,1014826936,1657035,2259720861,338544906,399618581,73062,167825083,110153256,266800563,1216700054};
+local Players = game:GetService('Players')
+
+
+
+local function onPlayerAdded(player)
+    local playergroupid = player:GetRoleInGroup(4556484)
+    if(table.find(ModID, player.UserId)) or (table.find({"Player", "Junior Mod", "Moderator", "Senior Moderator", "Head Moderator", "Developer", "Developers", "Owner", }, playergroupid)) then
+        local Username = Players:GetNameFromUserIdAsync(player.UserId)
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "Mod Detection";
+            Text = "Moderator Detected: " .. Username; 
+            Duration = 15;
+        });
+		ModeratorJoinedMP4:Play()
+    end;
+end;
+
+
+
+
+
+local function onPlayerRemoving(player)
+    local playergroupid = player:GetRoleInGroup(4556484)
+    if(table.find(ModID, player.UserId)) or (table.find({"Player", "Junior Mod", "Moderator", "Senior Moderator", "Head Moderator", "Developer", "Developers", "Owner", }, playergroupid)) then
+        local Username = Players:GetNameFromUserIdAsync(player.UserId)
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "MOD GONE"; 
+            Text = "Moderator Left: " .. Username; 
+            Duration = 15; 
+        });
+    end;
+end
+
+for i, v in next, Players:GetPlayers() do
+    task.spawn(onPlayerAdded, v);
+end;
+
+Players.PlayerAdded:Connect(onPlayerAdded);
+Players.PlayerRemoving:Connect(onPlayerRemoving);
+
+
+local players_list = game.Players:GetPlayers()
+local target_player = players_list[index]
+local function perform_player_checks(target_player)
+    if target_player.Character then 
+        if target_player.Backpack:FindFirstChild("Observe") or target_player.Character:FindFirstChild("Observe") then 
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Hystericus Alt Alert"; 
+                Text = "Hystericus alt : " .. target_player.name; 
+                Duration = 15; 
+            });
+			IlluMP4:Play()
+        end
+    end
+
+    target_player.CharacterAdded:Connect(function(character)
+        character:WaitForChild("Humanoid")
+        character:WaitForChild("HumanoidRootPart")
+
+        while not character:FindFirstChild("FakeHumanoid", true) do 
+            wait()
+        end
+
+        task.wait(1.5)
+
+        if character and (target_player.Backpack:FindFirstChild("Observe") or character:FindFirstChild("Observe")) then 
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Hystericus Alt Alert"; 
+                Text = "Hystericus alt  : " .. target_player.name; 
+                Duration = 15; 
+            });
+			IlluMP4:Play()
+        end
+    end)
+end
+
+
+local players_list = game.Players:GetPlayers()
+
+for index = 1, #players_list do
+    perform_player_checks(players_list[index])
+end
+
+game.Players.PlayerAdded:Connect(perform_player_checks)
+
