@@ -1,0 +1,41 @@
+local play = game.Players.LocalPlayer;
+local ffc = game.FindFirstChild;
+local mouse = play:GetMouse()
+local getChildren = game.GetChildren;
+local Live = workspace.Live;
+local function GetClosest()
+    local Closest = 250;
+    local plrClose;
+    for i,v in next, getChildren(Live) do
+        if play.Character and v ~= play.Character and ffc(v,"HumanoidRootPart") and (v.HumanoidRootPart.Position-mouse.Hit.p).magnitude < Closest then
+            Closest = (v.HumanoidRootPart.Position-mouse.Hit.p).magnitude;
+            plrClose = v;
+        end
+    end
+    if plrClose then
+        return plrClose.HumanoidRootPart;
+    end
+    return nil;
+end
+
+local getmouse = game.ReplicatedStorage.Requests.GetMouse;
+getmouse.OnClientInvoke = function()
+    local Closest = GetClosest();
+    if play.Character and ffc(play.Character,"Celeritas") and Closest then
+        local tab = {}
+        tab.Hit = Closest.CFrame
+        tab.Target = Closest
+        tab.UnitRay = Ray.new(play.Character.HumanoidRootPart.CFrame.p,((Closest.CFrame.p-play.Character.HumanoidRootPart.CFrame.p).Unit))
+        tab.X = mouse.X
+        tab.Y = mouse.Y
+        return tab
+    end
+    local tab = {}
+    tab.Hit = mouse.Hit
+    tab.Target = mouse.Target
+    tab.UnitRay = mouse.UnitRay
+    tab.X = mouse.X
+    tab.Y = mouse.Y
+    return tab
+end
+end
