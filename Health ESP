@@ -1,0 +1,38 @@
+local plrs = game:service'Players';
+
+		local function HEALEREDICT(model)
+		local human = model:WaitForChild('Humanoid',5);
+		if human then
+		human.HealthDisplayDistance = 100;
+		human.HealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOn;
+		end;
+		end;
+		
+		for _,p in next,plrs:GetPlayers() do
+		if p.Character~=nil then HEALEREDICT(p.Character) end;
+		p.CharacterAdded:Connect(function(c) HEALEREDICT(c) end);
+		end;
+		
+		plrs.PlayerAdded:Connect(function(p)
+		p.CharacterAdded:Connect(function(c) HEALEREDICT(c) end);
+		end);
+	else
+		local plrs = game:service'Players';
+
+local function HEALEREDICT(model)
+local human = model:WaitForChild('Humanoid',5);
+if human then
+human.HealthDisplayDistance = 100;
+human.HealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOff;
+end;
+end;
+
+for _,p in next,plrs:GetPlayers() do
+if p.Character~=nil then HEALEREDICT(p.Character) end;
+p.CharacterAdded:Connect(function(c) HEALEREDICT(c) end);
+end;
+
+plrs.PlayerAdded:Connect(function(p)
+p.CharacterAdded:Connect(function(c) HEALEREDICT(c) end);
+end);
+end
